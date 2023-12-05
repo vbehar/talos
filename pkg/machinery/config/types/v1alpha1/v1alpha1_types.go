@@ -51,7 +51,7 @@ type Config struct {
 	//     Indicates the schema used to decode the contents.
 	//   values:
 	//     - "v1alpha1"
-	ConfigVersion string `yaml:"version"`
+	ConfigVersion string `yaml:"version,omitempty"`
 	//   description: |
 	//     Enable verbose logging to the console.
 	//     All system containers logs will flow into serial console.
@@ -67,10 +67,10 @@ type Config struct {
 	ConfigPersist *bool `yaml:"persist,omitempty"`
 	//   description: |
 	//     Provides machine specific configuration options.
-	MachineConfig *MachineConfig `yaml:"machine"`
+	MachineConfig *MachineConfig `yaml:"machine,omitempty"`
 	//   description: |
 	//     Provides cluster specific configuration options.
-	ClusterConfig *ClusterConfig `yaml:"cluster"`
+	ClusterConfig *ClusterConfig `yaml:"cluster,omitempty"`
 }
 
 var _ config.MachineConfig = (*MachineConfig)(nil)
@@ -97,14 +97,14 @@ type MachineConfig struct {
 	//   values:
 	//     - "controlplane"
 	//     - "worker"
-	MachineType string `yaml:"type"`
+	MachineType string `yaml:"type,omitempty"`
 	//   description: |
 	//     The `token` is used by a machine to join the PKI of the cluster.
 	//     Using this token, a machine will create a certificate signing request (CSR), and request a certificate that will be used as its' identity.
 	//   examples:
 	//     - name: example token
 	//       value: "\"328hom.uqjzh6jnn2eie9oi\""
-	MachineToken string `yaml:"token"` // Warning: It is important to ensure that this token is correct since a machine's certificate has a short TTL by default.
+	MachineToken string `yaml:"token,omitempty"` // Warning: It is important to ensure that this token is correct since a machine's certificate has a short TTL by default.
 	//   description: |
 	//     The root certificate authority of the PKI.
 	//     It is composed of a base64 encoded `crt` and `key`.
@@ -126,7 +126,7 @@ type MachineConfig struct {
 	//   examples:
 	//     - name: Uncomment this to enable SANs.
 	//       value: '[]string{"10.0.0.10", "172.16.0.10", "192.168.0.10"}'
-	MachineCertSANs []string `yaml:"certSANs"`
+	MachineCertSANs []string `yaml:"certSANs,omitempty"`
 	//   description: |
 	//     Provides machine specific control plane configuration options.
 	//   examples:
